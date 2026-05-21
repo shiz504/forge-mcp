@@ -1,0 +1,10 @@
+.env
+data/
+reverse-proxy-login.txt
+reverse-proxy-login.hash
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.DS_Store

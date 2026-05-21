@@ -1,0 +1,35 @@
+# Example Caddy route for forge-mcp.
+# Replace the username/hash with a locally generated value and do not commit
+# live basic-auth hashes.
+
+https://mcp.example.net {
+    tls internal
+
+    @oauth_authorize path /authorize*
+    basic_auth @oauth_authorize {
+        admin "<generated-caddy-hash>"
+    }
+
+    log {
+        output discard
+    }
+
+    reverse_proxy host.docker.internal:8093 {
+        header_up X-Real-IP {http.request.remote.host}
+    }
+}
+
+http://mcp.example.net {
+    @oauth_authorize path /authorize*
+    basic_auth @oauth_authorize {
+        admin "<generated-caddy-hash>"
+    }
+
+    log {
+        output discard
+    }
+
+    reverse_proxy host.docker.internal:8093 {
+        header_up X-Real-IP {http.request.remote.host}
+    }
+}
